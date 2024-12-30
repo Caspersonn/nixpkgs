@@ -1205,6 +1205,8 @@ let
 
     mlgmpidl =  callPackage ../development/ocaml-modules/mlgmpidl { };
 
+    mlx = callPackage ../development/ocaml-modules/mlx { };
+
     mm = callPackage ../development/ocaml-modules/mm { };
 
     mmap =  callPackage ../development/ocaml-modules/mmap { };
@@ -1347,6 +1349,10 @@ let
 
     ocamlformat-lib = callPackage ../development/ocaml-modules/ocamlformat/ocamlformat-lib.nix { };
 
+    ocamlformat-mlx = callPackage ../development/ocaml-modules/ocamlformat-mlx { };
+
+    ocamlformat-mlx-lib = callPackage ../development/ocaml-modules/ocamlformat-mlx/lib.nix { };
+
     ocamlformat-rpc-lib = callPackage ../development/ocaml-modules/ocamlformat/ocamlformat-rpc-lib.nix { };
 
     ocamlfuse = callPackage ../development/ocaml-modules/ocamlfuse { };
@@ -1405,6 +1411,8 @@ let
     ocurl = callPackage ../development/ocaml-modules/ocurl { };
 
     odate = callPackage ../development/ocaml-modules/odate { };
+
+    odds = callPackage ../development/ocaml-modules/odds { };
 
     odig = callPackage ../development/ocaml-modules/odig { };
 
