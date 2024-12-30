@@ -1,32 +1,43 @@
-{ appimageTools, fetchurl , lib }:
-let
-  pname = "quiqr";
-  version = "0.18.11";
-  name = "${pname}-${version}";
+{ lib, buildNpmPackage, fetchFromGitHub, fetchurl, electron, embgit, git }:
 
-  src = fetchurl {
-    url = "https://github.com/quiqr/quiqr-desktop/releases/download/v${version}/quiqr_${version}_linux_x86_64.AppImage";
-    hash = "sha256-y9uIS84zu218+UAMOzO1ezPDcGFhismcXKlgPGJfn2M=";
+buildNpmPackage rec {
+  pname = "quiqr-desktop";
+  version = "0.18.11";
+
+  src = fetchFromGitHub {
+    owner = "quiqr";
+    repo = pname;
+    rev = "v${version}";
+    hash = "sha256-amcJ94TjndJE7WNdbrf6DFTLugG77hkhD9mAmbchE7A=";
   };
 
-appimageContents = appimageTools.extractType1 { inherit pname version src; };
-in
-appimageTools.wrapType1 {
-  inherit pname name version src;
+  nativeBuildInputs = [
+    electron
+    embgit
+    git
+  ];
 
-  extraInstallCommands = ''
-    install -m 444 -D ${appimageContents}/${pname}.desktop -t $out/share/applications
-    substituteInPlace $out/share/applications/${pname}.desktop \
-      --replace-fail 'Exec=AppRun' 'Exec=${pname}'
-    cp -r ${appimageContents}/usr/share/icons $out/share
-  '';
+  env = {
+    ELECTRON_SKIP_BINARY_DOWNLOAD = 1;
+    NODE_OPTIONS = "--openssl-legacy-provider";
+    EMBGIT_PATH="${embgit}/bin/embgit";
+  };
+
+ # postInstall = ''
+ #   makeWrapper ${nix}/bin/nix $out/bin/quiqr \
+ #     --add-flags "develop"
+ # '';
+
+  npmDepsHash = "sha256-B0PAk75ESmjUPusaLL70B6ZtwuemWY4+oeQhZegYfzk=";
+
+  #npmFlags = [ "--ignore-scripts" ];
+
+  #dontNpmBuild = true;
 
   meta = {
     description = "Offline CMS with a Hugo Engine";
-    homepage = "https://github.com/quiqr/quiqr-desktop";
-    downloadPage = "https://github.com/quiqr/quiqr-desktop/releases";
+    homepage = "https://quiqr.org";
     license = lib.licenses.mit;
-    sourceProvenance = with lib.sourceTypes; [ binaryNativeCode ];
-    platforms = [ "x86_64-linux" ];
+    maintainers = with lib.maintainers; [ caspersonn ];
   };
 }
