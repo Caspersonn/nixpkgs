@@ -9,7 +9,7 @@
 }:
 
 let
-  version = "1.0";
+  version = "1.0-alpha";
 in
 stdenv.mkDerivation {
   pname = "hedgedoc-cli";
@@ -18,8 +18,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "hedgedoc";
     repo = "cli";
-    rev = "v${version}";
-    sha256 = "uz+lkRRUTRr8WR295esNEbgjlZ/Em7mBk6Nx0BWLfg4=";
+    rev = "defeac80ca97fedcb19bdcddc516fd8f6e55fe8c";
+    sha256 = "sha256-7E5Ka6SEPRg2O4+bJ6g3gSDMLnPMzg5Lbslgvt6gNEg=";
   };
 
   nativeBuildInputs = [
@@ -50,6 +50,6 @@ stdenv.mkDerivation {
     description = "Hedgedoc CLI";
     homepage = "https://github.com/hedgedoc/cli";
     license = licenses.agpl3Only;
-    maintainers = with maintainers; [ drupol ];
+    maintainers = with maintainers; [ drupol Caspersonn ];
   };
 }
